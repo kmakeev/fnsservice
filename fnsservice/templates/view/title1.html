@@ -1,0 +1,24 @@
+<div id="title1" class="anchor"></div>
+<h2>ТОП 10 сведений о физических лицах, являющихся(являвшихся) руководителями, учредителями или участниками нескольких юридических лиц</h2>
+  <div class="table-responsive">
+      <table class="table table-striped">
+          <thead>
+              <tr>
+                  <th>№ п/п</th>
+                  <th>ОГРНИП</th>
+                  <th>ФИО</th>
+                  <th>Количество ЮЛ</th>
+                </tr>
+          </thead>
+          <tbody>
+              {% for item in dupl %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ item.Index }}</td>
+                  <td>{{ item.FIO }}</td>
+                  <td>{{ item.Quantity }}</td>
+                </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+  </div>

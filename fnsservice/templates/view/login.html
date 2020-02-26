@@ -1,0 +1,20 @@
+{% load staticfiles %}
+<div class="container-fluid">
+        <div class="row">
+            <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+              <div class="jumbotron">
+                  <div class="container">
+                      <!-- <p>Пожалуйста, введите имя пользователя и пароль</p> --->
+                          <form class="form-signin" novalidate>
+                            {$ csrf_token $}
+                             <div ng-repeat="error in errors" class="alert alert-danger" role="alert" ng-show="isInvalid">
+                                  <span >{$ error $}</span>
+                            </div>
+                            {{ form.as_div }}
+                            <button class="btn btn-outline-primary btn-block btn-lg" type="submit" ng-click="submit()">Войти</button>
+                        </form>
+                  </div>
+              </div>
+            </main>
+      </div>
+</div>

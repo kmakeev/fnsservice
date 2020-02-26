@@ -1,0 +1,63 @@
+<div id="title2" class="anchor"></div>
+<h2>Юридические лица, созданные по законодательству Украины, сведения о которых внесены в ЕГРЮЛ </h2>
+    <div class="center-block" cg-busy="vm_promise2">
+        <h4> Всего найдено записей - {$vm2.count$} </h4>
+        <nav aria-label="Search result" ng-show="vm2.$resolved">
+                <ul class="pagination justify-content-end">
+                    <li ng-class="{disabled:vm2.currentPage === 1}" class="page-item">
+                        <a class="page-link" ng-click="setPage2(1)"><<</a>
+                    </li>
+                    <li ng-class="{disabled:vm2.currentPage === 1}" class="page-item">
+                        <a class="page-link" ng-click="setPage2(vm2.currentPage - 1)"><</a>
+                    </li>
+                    <li ng-repeat="page in vm2.pages" ng-class="{active:vm2.currentPage === page}" class="page-item">
+                        <a class="page-link" ng-click="setPage2(page)">{$page$}</a>
+                    </li>
+                    <li ng-class="{disabled:vm2.currentPage === vm2.num_pages}" class="page-item">
+                        <a class="page-link" ng-click="setPage2(vm2.currentPage + 1)">></a>
+                    </li>
+                    <li ng-class="{disabled:vm2.currentPage === vm2.num_pages}" class="page-item">
+                        <a class="page-link" ng-click="setPage2(vm2.num_pages)">>></a>
+                    </li>
+                </ul>
+         </nav>
+          <div class="table-responsive" ng-show="vm2.$resolved">
+              <table class="table table-striped">
+                  <thead>
+                      <tr>
+                          <th>№ п/п</th>
+                          <th>Дата присвоения ОГРН</th>
+                          <th>ОГРН</th>
+                          <th>ИНН</th>
+                          <th>КПП</th>
+                          <th>Наименование</th>
+                          <th>Адрес регистрации</th>
+                          <th>Дата формирования сведений из ЕГРЮЛ </th>
+                          <th>Дата прекращения деятельности </th>
+                        </tr>
+                  </thead>
+                  <tbody>
+
+                        <tr ng-repeat="item in vm2.results">
+                            <td>{$ $index + 1 $}</td>
+                            <td>{$ item.СвЮЛ.ДатаОГРН $}</td>
+                            <td> <a target="_blank" ng-href="#!egrul/{$ item.СвЮЛ.ОГРН $}">{$ item.СвЮЛ.ОГРН $}</a></td>
+                            <td>{$ item.СвЮЛ.ИНН $}</td>
+                            <td>{$ item.СвЮЛ.КПП $}</td>
+                            <td>{$ item.СвЮЛ.СвНаимЮЛ.НаимЮЛСокр $}
+                            </td>
+                            <td>{$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Индекс $} {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Регион $} {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Район $}
+                                {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Город $} {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.НаселПункт $} {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Улица $} {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Дом $}
+                                {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Корпус $} {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Кварт $}
+                            </td>
+                            <td>{$ item.СвЮЛ.ДатаВып $}</td>
+                            <td>{$ item.СвЮЛ.СвПрекрЮЛ.ДатаПрекрЮЛ $}</td>
+                        </tr>
+
+
+                  </tbody>
+              </table>
+          </div>
+    </div>
+
+

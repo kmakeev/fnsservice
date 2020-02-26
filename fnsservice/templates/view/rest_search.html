@@ -1,0 +1,186 @@
+<div class="container-fluid">
+      <div class="row">
+          <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
+              <div class="col-11 offset-1">
+                <h1>Фильтрация</h1>
+              </div>
+                  <form name="advanved_search_form" class="form">
+                         <div ng-repeat="block in advancedFilter">
+                             <div class="col-11 offset-1">
+                                <input class="form-check-input" name="{$ block.name $}" id="{$ block.id $}"type="checkbox" ng-model="advanced_subscribe_data[block.name]" >
+                                <label for="{$ block.id $}"> {$ block.label $} </label>
+                             </div>
+                             <div ng-repeat="field in block.fields" ng-show="advanced_subscribe_data[block.name]" class="animate-show-hide">
+                                 <div ng-if="field.type=='Char'" class="form-group row col-11 offset-1" >
+                                    <input id="{$ field.id $}" name="{$ field.name $}" placeholder="{$ field.label $}" class="form-control" ng-model="advanced_subscribe_data[field.name]"/>
+                                 </div>
+                                 <div ng-if="field.type=='Number'" class="form-group row col-11 offset-1" >
+                                    <input id="{$ field.id $}" name="{$ field.name $}" placeholder="{$ field.label $}" class="form-control" type="number" ng-model="advanced_subscribe_data[field.name]"/>
+                                 </div>
+                                 <div ng-if="field.type=='Select'" class="form-group row col-11 offset-1" id="{$ field.id $}">
+                                     <select class="custom-select form-control form-control-sm" ng-init="advanced_subscribe_data[field.name]=field.options[0]" ng-model="advanced_subscribe_data[field.name]" ng-options="option.name for option in field.options"></select>
+                                 </div>
+                                 <div ng-if="field.type=='MultipleSelect'" class="form-group row col-11 offset-1" id="{$ field.id $}">
+                                     <select multiple class="form-control" size="10" ng-model="advanced_subscribe_data[field.name]">
+                                          <option ng-repeat="option in field.options" value="{$option.value$}">{$option.name$}</option>
+                                     </select>
+                                 </div>
+                                 <div ng-if="field.type=='Date'" class="form-group row col-11 offset-1" id="{$ field.id $}">
+                                     <label for="{$ field.id $}"> {$ field.label $} </label>
+                                     <input id="{$ field.id $}" class="form-control" name="{$ field.name $}" type="date" ng-model="advanced_subscribe_data[field.name]">
+                                 </div>
+                                 <div ng-if="field.type=='Bool'" class="form-group row col-11 offset-1" id="{$ field.id $}">
+                                     <input id="{$ field.id $}" class="form-check-input" name="{$ field.name $}" type="checkbox" ng-model="advanced_subscribe_data[field.name]">
+                                     <label for="{$ field.id $}"> {$ field.label $} </label>
+                                 </div>
+                             </div>
+                         </div>
+
+                        <div class="col-11 offset-1">
+                            <a href ng-click="resetFilterParam()">Очистить</a>
+                            <button class="btn btn-outline-info btn-block btn-sm" type="button" ng-click="submit()">Обновить</button>
+                        </div>
+                 </form>
+
+          </nav>
+
+          <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+              {% include "view/modal/error.html" %}
+              <h1>Поиск сведений </h1>
+              <div class="jumbotron jumbotron-fluid">
+                  <div class="row justify-content-center">
+                      <form class="form col-6">
+                          <div class="form-inline">
+                                <div class="form-group col-sm-6">
+                                    <input class="form-control col-12 " name="{{ form.search.name }}" id={{ form.search.id_for_label }} type="text" placeholder="{{ form.search.label }}" ng-model="subscribe_data['{{ form.search.name }}']">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <input class="form-control col-12 " name="{{ form.fio.name }}" id={{ form.fio.id_for_label }} type="text" placeholder="{{ form.fio.label }}" ng-model="subscribe_data['{{ form.fio.name }}']">
+                                </div>
+                          </div>
+                          <div class="form-group"/>
+                              <div class="form-inline">
+                                  <div class="form-group col-sm-6">
+                                      <small id="{{ form.reg_start_date.id_for_label }}" class="form-text text-muted"> {{ form.reg_start_date.label }} </small>
+                                      <input  class="form-control col-12" aria-describedby="{{ form.reg_start_date.id_for_label }}" name="{{ form.reg_start_date.name }}" type="date" ng-model="subscribe_data['{{ form.reg_start_date.name }}']">
+                                  </div>
+                                   <div class="form-group col-sm-6">
+                                       <small id="{{ form.reg_end_date.id_for_label }}"class="form-text text-muted" > {{ form.reg_end_date.label }} </small>
+                                       <input class="form-control col-12" aria-describedby="{{ form.reg_end_date.id_for_label }}" name="{{ form.reg_end_date.name }}" type="date" ng-model="subscribe_data['{{ form.reg_end_date.name }}']">
+                                   </div>
+                              </div>
+                          <div class="form-group"/>
+                          <div class="form-group col-sm-12">
+                               <small class="form-text text-muted" > {{ form.region.label }} </small>
+                              {{ form.region }}
+                          </div>
+                          <div class="form-group col-sm-12">
+                              <small class="form-text text-muted" > {{ form.isactive.label }} </small>
+                              {{ form.isactive }}
+                          </div>
+                          <div class="form-group col-sm-12">
+                              <small class="form-text text-muted" > {{ form.state.label }} </small>
+                              {{ form.state }}
+                          </div>
+                          <div class="form-group col-sm-12">
+                              <small class="form-text text-muted" > {{ form.okved.label }} </small>
+                              {{ form.okved }}
+                          </div>
+                          <div class="row justify-content-center">
+                              <div class="col-sm-12 offset-1">
+                                   <a href ng-click="resetParam()">Очистить</a>
+                              </div>
+                              <div class="form-group col-sm-11">
+                                  <button class="btn btn-outline-primary btn-block btn-lg " type="button" ng-click="submit()">Найти</button>
+                              </div>
+
+                          </div>
+                        </form>
+                  </div>
+
+              </div>
+
+              <div class="center-block" cg-busy="search_promise">
+                    <h4 ng-show="search.$resolved"> Всего найдено записей - {$search.count$} </h4>
+                    <nav aria-label="Search result" ng-show="search.$resolved">
+                            <ul class="pagination justify-content-end">
+                                <li ng-class="{disabled:search.currentPage === 1}" class="page-item">
+                                    <a class="page-link" ng-click="setPage(1)"><<</a>
+                                </li>
+                                <li ng-class="{disabled:search.currentPage === 1}" class="page-item">
+                                    <a class="page-link" ng-click="setPage(search.currentPage - 1)"><</a>
+                                </li>
+                                <li ng-repeat="page in search.pages" ng-class="{active:search.currentPage === page}" class="page-item">
+                                    <a class="page-link" ng-click="setPage(page)">{$page$}</a>
+                                </li>
+                                <li ng-class="{disabled:search.currentPage === search.num_pages}" class="page-item">
+                                    <a class="page-link" ng-click="setPage(search.currentPage + 1)">></a>
+                                </li>
+                                <li ng-class="{disabled:search.currentPage === search.num_pages}" class="page-item">
+                                    <a class="page-link" ng-click="setPage(search.num_pages)">>></a>
+                                </li>
+                            </ul>
+                     </nav>
+                      <div class="table-responsive" ng-show="search.$resolved">
+                          <table class="table table-striped">
+                              <thead>
+                                  <tr>
+                                      <th>№ п/п</th>
+                                      <th>Дата присвоения ОГРН</th>
+                                      <th>ОГРН</th>
+                                      <th>ИНН</th>
+                                      <th>КПП</th>
+                                      <th>Наименование</th>
+                                      <th>Адрес регистрации</th>
+                                      <th>Дата формирования сведений из ЕГРЮЛ </th>
+                                      <th>Дата прекращения деятельности </th>
+                                    </tr>
+                              </thead>
+                              <tbody>
+
+                                    <tr ng-repeat="item in search.results">
+                                        <td>{$ $index + 1 $}</td>
+                                        <td>{$ item.СвЮЛ.ДатаОГРН $}</td>
+                                        <td> <a target="_blank" ng-href="#!egrul/{$ item.СвЮЛ.ОГРН $}">{$ item.СвЮЛ.ОГРН $}</a></td>
+                                        <td>{$ item.СвЮЛ.ИНН $}</td>
+                                        <td>{$ item.СвЮЛ.КПП $}</td>
+                                        <td>{$ item.СвЮЛ.СвНаимЮЛ.НаимЮЛСокр $}
+                                        </td>
+                                        <td>{$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Индекс $} {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Регион $} {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Район $}
+                                            {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Город $} {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.НаселПункт $} {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Улица $} {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Дом $}
+                                            {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Корпус $} {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Кварт $}
+                                        </td>
+                                        <td>{$ item.СвЮЛ.ДатаВып $}</td>
+                                        <td>{$ item.СвЮЛ.СвПрекрЮЛ.ДатаПрекрЮЛ $}</td>
+                                    </tr>
+
+
+                              </tbody>
+                          </table>
+                      </div>
+                      <nav aria-label="Search result" ng-show="search.$resolved">
+                                <ul class="pagination justify-content-end">
+                                    <li ng-class="{disabled:search.currentPage === 1}" class="page-item">
+                                        <a class="page-link" ng-click="setPage(1)"><<</a>
+                                    </li>
+                                    <li ng-class="{disabled:search.currentPage === 1}" class="page-item">
+                                        <a class="page-link" ng-click="setPage(search.currentPage - 1)"><</a>
+                                    </li>
+                                    <li ng-repeat="page in search.pages" ng-class="{active:search.currentPage === page}" class="page-item">
+                                        <a class="page-link" ng-click="setPage(page)">{$page$}</a>
+                                    </li>
+                                    <li ng-class="{disabled:search.currentPage === search.num_pages}" class="page-item">
+                                        <a class="page-link" ng-click="setPage(search.currentPage + 1)">></a>
+                                    </li>
+                                    <li ng-class="{disabled:search.currentPage === search.num_pages}" class="page-item">
+                                        <a class="page-link" ng-click="setPage(search.num_pages)">>></a>
+                                    </li>
+                                </ul>
+                         </nav>
+                </div>
+          </main>
+      </div>
+</div>
+
+
+

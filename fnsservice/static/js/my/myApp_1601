@@ -1,0 +1,427 @@
+'use strict';
+    angular
+        .module('myApp', ['ngRoute', 'ngAnimate', 'ngSanitize', 'ngResource', 'ngParseExt', 'dadata', 'djng.forms', 'cgBusy'])
+        .config(function($interpolateProvider, $locationProvider, $routeProvider, $httpProvider, $resourceProvider) {
+            console.log('In change config');
+            $interpolateProvider.startSymbol('{$');
+            $interpolateProvider.endSymbol('$}');
+            $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+            $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+            $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+            $resourceProvider.defaults.stripTrailingSlaches = false;
+            // optionally inform about the connection status in the browser's console
+            $routeProvider
+                .when('/', {
+                    templateUrl: 'view/dashboard.html',
+                    controller: 'myCtrlDashboard'
+
+                })
+                .when('/egrul/', {
+                    templateUrl: 'view/egrul.html',
+                    controller: 'myCtrlErgul'
+
+                })
+                .when('/search/', {
+                    templateUrl: 'view/search.html',
+                    controller: 'myCtrlSearch'
+
+                })
+                .otherwise( {
+                    redirectTo: '/'
+                    })
+
+            })
+        .service('searchService', function($resource){
+
+            var goToSearch = false;
+            var search = '';
+            var result = $resource("view/search.html");
+            var errors;
+
+            return {
+                goToSearch: function() {
+                    return goToSearch;
+                },
+                setGoToSearch: function(value) {
+                    goToSearch = value;
+                },
+                search: function() {
+                    return search;
+                },
+                setSearch: function(value) {
+                    search = value;
+                },
+                result: function(subscribe_data) {
+                    console.log('post result');
+                    console.log(subscribe_data);
+                    var q = result.save(subscribe_data)
+                    console.log(q);
+                    return q;
+                },
+                setResult: function(value) {
+                    result = value;
+                },
+                errors: function() {
+                    return errors;
+                },
+                setErrors: function(value) {
+                    errors = value;
+                },
+                isInvalid: function() {
+                    return isInvalid;
+                },
+                setIsInvalid: function(value) {
+                    isInvalid = value;
+                },
+                successCallback: function(response){
+                                    //success code
+                                    console.log(' in callback');
+                                    if (response.data.find_errors.length==0) {
+                                        console.log('response send valid');
+                                        console.log(response.data.result);
+                                        result = response.data.result;
+                                        errors = response.data.find_errors;
+                                        search = "TEST";
+                                        console.log(self);
+
+
+                                    } else {
+                                        console.log('response send invalid');
+                                        isInvalid = true;
+                                        errors = response.data.find_errors;
+                                    }
+
+                             },
+                errorCallback: function(response){
+                                    //error code
+                                    console.error('An error occured during submission');
+                                    isInvalid = true;
+                                    errors = response.data.find_errors;
+                                }
+
+            }
+
+
+        })
+        .factory ('Filter', function($resource) {
+
+            var resource =
+             $resource("/api/uklist/",
+             {
+                    filter: "@filter",
+                    page: "@page"
+             },
+             {
+                /*query: {
+                    method: 'GET',
+                    //params: {page: "1"},
+                    isArray: false,
+                    //filter: filter
+                },
+                */
+            });
+            resource.prototype.retrieveFilter = function () {
+                // console.log('In retrieveFilter -', this.filter, this.page);
+                return this.$get(
+                {
+                    page: this.page,
+                    filter: this.filter,
+                    isArray: false
+                    // filter: filter
+                });
+            };
+            return resource;
+        })
+
+        .controller('myCtrlDashboard', function myCtrlDashboard($scope, $route, $routeParams, $location, $anchorScroll, $http, Filter) {
+            console.log('In add myCtrlDashboard');
+            $scope.content = [{
+                            "title": "Начало",
+                            "href": "top",
+                            "href_test": "top"
+                            },
+                            {
+                                "title": "Сведения о ФЛ, являющихся руководителями (участниками) нескольких юридических лиц",
+                                "href": "title1",
+                                "href_test": "title1"
+                            },
+                            {
+                                "title": "Юридические лица, созданные по законодательству Украины, сведения о которых внесены в ЕГРЮЛ",
+                                "href": "title2",
+                                "href_test": "title2"
+                            },
+                            {
+                                "title": "Конец",
+                                "href": "bottom",
+                                "href_test": "bottom"
+                            }];
+            // $scope.content = {};
+            //$scope.currentPage = 1;
+
+            var filter_uk = new Filter();
+            // filter_uk.filter={СвЮЛ__СвОбрЮЛ__СпОбрЮЛ__КодСпОбрЮЛ: "03"};
+            filter_uk.page = 1;
+
+            $scope.vm = filter_uk.retrieveFilter();
+           // $scope.vm_value = $scope.vm.$$state.value();
+            $scope.setPage = function(page) {
+                // console.log(filter_uk.$resolved);
+                filter_uk.page = page;
+                $scope.vm = filter_uk.retrieveFilter();
+            }
+
+            var filter_ = new Filter();
+            filter_.page = 10;
+             // $scope.vm_value = $scope.vm.$$state.value();
+            filter_.retrieveFilter();
+            $scope.vm2 = filter_;
+
+            $scope.setPage2 = function(page) {
+                // console.log(filter_uk.$resolved);
+                filter_.page = page;
+                filter_.retrieveFilter();
+            }
+
+            $scope.scrollTo = function(id){
+            console.log('In scroll');
+            console.log(id);
+            $anchorScroll.yOffset = 55;
+            $anchorScroll(id);            }
+
+        })
+        .controller('myCtrlSearch', function myCtrlSearch($scope, $http, $route, $location, $anchorScroll, searchService) {
+            console.log('In add myCtrlSearch');
+            $scope.content = [{
+                            "title": "Начало",
+                            "href": "top",
+                            "href_test": "top"
+                            },
+                            {
+                                "title": "где то в середине",
+                                "href": "label",
+                                "href_test": "label"
+                            },
+                            {
+                                "title": "Конец",
+                                "href": "bottom",
+                                "href_test": "bottom"
+                            }];
+            //$scope.result = searchService.result($scope.subscribe_data);
+            //$scope.search = searchService.search();
+            //$scope.isInvalid = searchFactory.isInvalid;
+            if (searchService.goToSearch()) {
+                console.log(searchService.search());
+                setTimeout(function(){
+                if ($scope.subscribe_data) {
+                   $scope.subscribe_data.search = searchService.search();
+                   //console.log(searchService.result())
+                   $scope.result = searchService.result($scope.subscribe_data);
+                   }
+               }, 100);
+
+            }
+
+
+
+            $scope.scrollTo = function(id){
+            console.log('In scroll');
+            console.log(id);
+            $anchorScroll(id);
+            }
+
+            $scope.submit = function() {
+                console.log('In Submit');
+                if ($scope.subscribe_data) {
+                     console.log('yes data');
+                     $scope.result = searchService.result($scope.subscribe_data);
+                } else {
+                console.log('param for search invalid');
+                // console.log($scope);
+                $scope.isInvalid = true;
+                $scope.errors = ['Параметр для поиска должен быть более одного символа'];
+                return false;
+                }
+            }
+
+        })
+        .controller('myCtrlMenu', function myCtrlMenu($scope, $location, $http) {
+            console.log('In add myCtrlMenu');
+            $scope.menu =[{}];
+            $http.get("menu.html").then(successCallback, errorCallback);
+            function successCallback(response){
+                        console.log('success get menu');
+                        // console.log(response);
+                        //success code
+                        $scope.menu = response.data;
+                        }
+             function errorCallback(error){
+                        //error code
+                        console.error('An error occured during submission');
+                    }
+
+            $scope.isActive = function(location){
+                return location==$location.path();
+            };
+
+        })
+        .controller('myCtrlErgul', function myCtrlErgul($scope, $anchorScroll) {
+            console.log('In add CtrlYL');
+            $scope.html_egrul = '<b> Search Result </b>';
+            $scope.content = [{
+                            "title": "Начало",
+                            "href": "top"
+                            },
+                            {
+                                "title": "Конец",
+                                "href": "bottom"
+                            }];
+
+            $scope.scrollTo = function(id){
+            console.log('In scroll');
+            console.log(id);
+            $anchorScroll.yOffset = 55;
+            $anchorScroll(id);
+            }
+        })
+        .controller('myCtrlFormSearch', function myCtrlFormSearch($scope, $sce, $http, $window, $location, djangoForm, searchService) {
+        console.log('myCtrlFormSearch');
+        })
+
+        .controller('myCtrlForm', function myCtrlForm($scope, $sce, $http, $window, $location, djangoForm, searchService) {
+            console.log('In myCtrlForm');
+            // $scope.isDadata = $scope.showPopup;
+            $scope.isDjForm = !$scope.showPopup;
+            $scope.isInvalid = false;
+            $scope.search = '';
+            $scope.errors = '';
+            $scope.checkboxChange = function() {
+            // $scope.isDadata = $scope.showPopup;
+            $scope.isDjForm = !$scope.showPopup;
+            }
+                        function successCallback(response){
+                                //success code
+                                console.log(' in callback');
+                                if (response.data.find_errors.length==0) {
+                                    console.log('response send valid');
+                                    console.log(response.data.goToSearch);
+                                    if (!response.data.goToSearch) {
+                                        console.log('Not go to search');
+                                        $scope.isInvalid = false;
+                                        // console.log(response.data.html_egrul);
+                                        $scope.$parent.html_egrul = $sce.trustAsHtml(response.data.html_egrul);
+                                        $scope.$parent.content = response.data.content;
+                                        $scope.errors = response.data.find_errors;
+                                    } else {
+                                    //console.log('Go to search');
+                                    console.log($scope.subscribe_data.search);
+                                    //console.log(response.data.search_param);
+                                    //$rootScope.searchparam = response.data.search_param;
+                                    searchService.setSearch($scope.subscribe_data.search);
+                                    searchService.setGoToSearch(true);
+                                    $location.path('/search');
+                                    //$scope.$emit('goToSearch');
+                                    }
+
+
+                                } else {
+                                    console.log('response send invalid');
+                                    $scope.isInvalid = true;
+                                    $scope.errors = response.data.find_errors;
+                                }
+
+                         }
+                        function errorCallback(error){
+                                //error code
+                                console.error('An error occured during submission');
+                                $scope.isInvalid = true;
+                                $scope.errors = response.data.find_errors;
+                            }
+                $scope.submit = function() {
+                console.log('In Submit');
+                console.log($scope);
+                console.log($scope.search);
+                if (($scope.subscribe_data && $scope.isDjForm) || ($scope.party && !$scope.isDjForm)) {
+                     console.log('yes data');
+                     if ($scope.isDjForm) {
+                        console.log('In isDjForm');
+                        $http.post("view/egrul.html", $scope.subscribe_data).then(successCallback, errorCallback);
+                     } else {
+                        console.log('In isDadata');
+                        console.log($scope.party.ogrn);
+                            if ($scope.party.ogrn) {
+                                var param = JSON.stringify({search:$scope.party.ogrn})
+                                console.log(param);
+                                $http.post("view/egrul.html",param).then(successCallback, errorCallback);
+                            }
+                     }
+                } else {
+                console.log('param for search invalid');
+                // console.log($scope);
+                $scope.isInvalid = true;
+                $scope.errors = ['Параметр для поиска должен быть более одного символа'];
+                return false;
+                }
+
+
+            };
+
+        });
+
+<div id="title2" class="anchor"></div>
+<h2>Юридические лица, созданные по законодательству Украины, сведения о которых внесены в ЕГРЮЛ (последние записи)</h2>
+    <div class="center-block" style="height: 650px;" cg-busy="vm">
+        <nav aria-label="Search result" ng-show="vm.$$state.value.$resolved">
+                <ul class="pagination justify-content-end">
+                    <li ng-class="{disabled:vm.$$state.value.currentPage === 1}" class="page-item">
+                        <a class="page-link" ng-click="setPage(1)">First</a>
+                    </li>
+                    <li ng-class="{disabled:vm.$$state.value.currentPage === 1}" class="page-item">
+                        <a class="page-link" ng-click="setPage(vm.$$state.value.currentPage - 1)">Previous</a>
+                    </li>
+                    <li ng-repeat="page in vm.$$state.value.pages" ng-class="{active:vm.$$state.value.currentPage === page}" class="page-item">
+                        <a class="page-link" ng-click="setPage(page)">{$page$}</a>
+                    </li>
+                    <li ng-class="{disabled:vm.$$state.value.currentPage === vm.$$state.value.num_pages}" class="page-item">
+                        <a class="page-link" ng-click="setPage(vm.$$state.value.currentPage + 1)">Next</a>
+                    </li>
+                    <li ng-class="{disabled:vm.$$state.value.currentPage === vm.$$state.value.num_pages}" class="page-item">
+                        <a class="page-link" ng-click="setPage(vm.$$state.value.num_pages)">Last</a>
+                    </li>
+                </ul>
+         </nav>
+          <div class="table-responsive" ng-show="vm.$$state.value.$resolved">
+              <table class="table table-striped">
+                  <thead>
+                      <tr>
+                          <th>№ п/п</th>
+                          <th>Дата присвоения ОГРН</th>
+                          <th>ОГРН</th>
+                          <th>ИНН</th>
+                          <th>КПП</th>
+                          <th>Наименование</th>
+                          <th>Адрес регистрации</th>
+                          <th>Дата формирования сведений из ЕГРЮЛ </th>
+                          <th>Дата прекращения деятельности </th>
+                        </tr>
+                  </thead>
+                  <tbody>
+
+                        <tr ng-repeat="item in vm.$$state.value.results">
+                            <td>{$ $index + 1 $}</td>
+                            <td>{$ item.СвЮЛ.ДатаОГРН $}</td>
+                            <td>{$ item.СвЮЛ.ОГРН $}</td>
+                            <td>{$ item.СвЮЛ.ИНН $}</td>
+                            <td>{$ item.СвЮЛ.КПП $}</td>
+                            <td>{$ item.СвЮЛ.СвНаимЮЛ.НаимЮЛСокр $}
+                            </td>
+                            <td>{$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Индекс $}
+                            </td>
+                            <td>{$ item.СвЮЛ.ДатаВып $}</td>
+                            <td>{$ item.СвЮЛ.СвПрекрЮЛ.ДатаПрекрЮЛ $}</td>
+                        </tr>
+
+
+                  </tbody>
+              </table>
+          </div>
+    </div>

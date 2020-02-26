@@ -1,0 +1,71 @@
+{% load staticfiles %}
+<div class="container-fluid">
+        <div class="row row-offcanvas row-offcanvas-left">
+            <!-- <nav class="col-sm-3 col-md-2 bg-faded sidebar sidebar-offcanvas" id="sidebar"> -->
+                <div class="col-5 col-sm-5 col-md-3 col-lg-2 col-xl-2 sidebar-offcanvas" id="sidebar">
+                        <div class="list-group">
+                            <a href="" ng-click="setSection('all')" class="list-group-item" ng-class="{active:section.all}"> Все </a>
+                            <a href="" ng-click="setSection('process')" class="list-group-item" ng-class="{active:section.process}"> В вроцессе </a>
+                            <a href="" ng-click="setSection('resolved')" class="list-group-item" ng-class="{active:section.resolved}"> Разрешенные </a>
+                            <a href="" class="list-group-item disabled" disabled="disabled" ng-class="{active:section.archive}"> Архив </a>
+                        </div>
+                </div>
+             <!--   </nav> -->
+
+            <div class="col-12 col-sm-12 col-md-9 col-lg-10 col-xl-10"  cg-busy="input_requests_promise">
+                <div>
+                    <p class="float-left hidden-md-up">
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="offcanvas">Меню</button>
+                    </p>
+                </div>
+                <h4> Всего  - {$ input_requests.count $} </h4>
+                    <nav aria-label="Search result" ng-show="input_requests.$resolved">
+                            <ul class="pagination justify-content-end">
+                                <li ng-class="{disabled:input_requests.currentPage === 1}" class="page-item">
+                                    <a class="page-link" ng-click="setPage(1)"><<</a>
+                                </li>
+                                <li ng-class="{disabled:input_requests.currentPage === 1}" class="page-item">
+                                    <a class="page-link" ng-click="setPage(input_requests.currentPage - 1)"><</a>
+                                </li>
+                                <li ng-repeat="page in input_requests.pages" ng-class="{active:input_requests.currentPage === page}" class="page-item">
+                                    <a class="page-link" ng-click="setPage(page)">{$page$}</a>
+                                </li>
+                                <li ng-class="{disabled:input_requests.currentPage === input_requests.num_pages}" class="page-item">
+                                    <a class="page-link" ng-click="setPage(input_requests.currentPage + 1)">></a>
+                                </li>
+                                <li ng-class="{disabled:input_requests.currentPage === input_requests.num_pages}" class="page-item">
+                                    <a class="page-link" ng-click="setPage(input_requests.num_pages)">>></a>
+                                </li>
+                            </ul>
+                     </nav>
+                <div class="table-responsive" ng-show="input_requests.$resolved">
+                      <table class="table table-striped">
+                          <thead>
+                                  <tr>
+                                      <th>№ п/п</th>
+                                      <th>Тип запроса</th>
+                                      <th>Параметры</th>
+                                      <th>Статус</th>
+                                      <th>Дата/время</th>
+                                      <th>ИД Корневого запроса/ИД запроса</th>
+                                    </tr>
+                              </thead>
+                          <tbody>
+
+                                <tr ng-repeat="item in input_requests.results">
+                                    <td>{$ $index + 1 $}</td>
+                                    <td>{$ item.service $} / {$ item.method $}</td>
+                                    <td>{$ item.params $}</td>
+                                    <td>{$ item.code $}</td>
+                                    <td>{$ item.datereq $}</td>
+                                    <td>{$ item.root_id $} / {$ item.this_id $}</td>
+                                </tr>
+                          </tbody>
+                      </table>
+                </div>
+            </div>
+
+        </div>
+</div>
+
+ <script src="{% static 'js/offcanvas.js' %}"></script>

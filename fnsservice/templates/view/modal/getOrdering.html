@@ -1,0 +1,36 @@
+<!-- HTML-код модального окна -->
+<div id="getOrderindModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <!-- Заголовок модального окна -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">E-System</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <form class="form" novalidate>
+                        {% csrf_token %}
+                        <div ng-repeat="error in errors" class="alert alert-danger" role="alert" ng-show="isGetOrderInvalid">
+                            <span >{$ error $}</span>
+                        </div>
+                         {{ getform.as_div }}
+                         <button class="btn btn-outline-primary btn-block btn-lg" type="submit" ng-click="getOrdering()">Отправить запрос</button>
+                    </form>
+                </div>
+            </div>
+          <!-- Футер модального окна
+           <div class="modal-footer">
+
+          </div>
+           -->
+
+        </div>
+          <script type="text/javascript">
+              $('#getOrderindModal').on('shown.bs.modal', function () {
+              $('#id_search').focus();
+            })
+            </script>
+  </div>
+
+</div>

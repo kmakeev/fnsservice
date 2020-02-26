@@ -1,0 +1,48 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
+            <div class="col-11 offset-1">
+                <h1>Содержание</h1>
+              </div>
+          <ul class="nav nav-pills flex-column">
+              <li ng-repeat="link in content" class="nav-item">
+                  <a href="" class="nav-link"  ng-click="scrollTo(link.href)">{$ link.title $}</a>
+              </li>
+
+          </ul>
+
+        </nav>
+        <div id="top" class="anchor"></div>
+        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+            <div class="hidden-xs-down hidden-sm-down hidden-md-down hidden-lg-down">
+                <h1 align="center">Диаграммы</h1>
+            </div>
+                      <section class="row text-left placeholders hidden-xs-down hidden-sm-down hidden-md-down hidden-lg-down">
+                        {% for item in figures %}
+                        <div class="col-6 col-sm-3 placeholder" >
+                            <h4>{{item.name}}</h4>
+                            {{ item.div | safe }}
+                        </div>
+                         {% endfor %}
+
+                      </section>
+
+                    {% block title %}
+                    {% include "view/title1.html" %}
+                    {% include "view/dash2.html" %}
+                    {% include "view/dash3.html" %}
+                    {% endblock %}
+        </main>
+      </div>
+    <div id="bottom" class="anchor"></div>
+</div>
+{% for item in figures %}
+{{ item.script | safe }}
+{% endfor %}
+
+
+
+
+
+

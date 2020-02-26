@@ -1,0 +1,95 @@
+{% load staticfiles %}
+<style type="text/css">
+    table { counter-reset: item; }
+    td.num:before {
+    content: counters(item, ".") " ";
+    counter-increment: item;
+
+   }
+
+</style>
+<div class="container-fluid">
+      <div class="row">
+          <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
+              <div class="col-11 offset-1">
+                <h1>Разделы</h1>
+              </div>
+              <ul class="nav nav-pills flex-sm-column">
+                  <li ng-repeat="link in content" class="nav-item">
+                      <a class="nav-link" href="" ng-click="scrollTo(link.href)">{$ link.title $}</a>
+                  </li>
+
+              </ul>
+          </nav>
+
+          <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+               {% include "view/modal/getOrdering.html" %}
+               {% include "view/modal/afterOrderSending.html" %}
+              <h1>Сведения о государственной регистрации юридического лица (ОГРН): {$ title $}</h1>
+              <div class="jumbotron">
+                  <div class="container">
+                        <p>Все сведения из ЕГРЮЛ являются открытыми и предоставляются на основании п.1 ст.6 Федерального закона от 08.08.2001 № 129-ФЗ «О государственной регистрации юридических лиц и индивидуальных предпринимателей»: Содержащиеся в государственных реестрах сведения и документы являются открытыми и общедоступными, за исключением сведений, доступ к которым ограничен, а именно сведения о документах, удостоверяющих личность физического лица.</p>
+                        <form name="search_form">
+                            {% csrf_token %}
+
+                            <div ng-repeat="error in errors" class="alert alert-danger" role="alert" ng-show="isInvalid">
+                                <span >{$ error $}</span>  <a ng-href="#!search"> Пожалуйста, воспользуйтесь расширенным поиском.</a>
+                            </div>
+                            <div class="form-group animate-show-hide" ng-show="isDjForm">
+                                <!-- <label for="{{ form.search.id_for_label }}" class="control-label">{{ form.search.label }}</label>
+                                <input type="text" class="form-control input-lg" ng-model="search"/> -->
+                                {{ form.as_div }}
+                            </div>
+                            <div class="form-group animate-show-hide" ng-hide="isDjForm">
+                               <!-- <label for="{{ form.search.id_for_label }}" class="control-label">{{ form.search.label }}</label> -->
+                                <input id={{ form.search.id_for_label }} placeholder="ИНН, ОГРН, наименование или адрес юридического лица " class="form-control input-lg" dadata ddt-type="party" ddt-model="party"/>
+                            </div>
+                            <button class="btn btn-outline-primary btn-block btn-lg" type="button" ng-click="submit()">Найти</button>
+                            <label class="form-check-label">
+                                    <input type="checkbox" ng-model="showPopup" ng-change="checkboxChange()" class="form-check-input"> Использовать подсказки
+                            </label>
+                        </form>
+                  </div>
+              </div>
+              <div class="d-flex flex-row-reverse" ng-show="subscribe_data.search">
+                  <div class="p-2">
+                      <a ng-href="/pdf/{$id$}">
+                        <span class="oi oi-data-transfer-download" title="Скачать PDF" aria-hidden="true"></span>
+                      </a>
+                  </div>
+                  <div class="p-2">
+                      <a href="" ng-click="printDiv('printable')">
+                        <span class="oi oi-print" title="Распечатать" aria-hidden="true"></span>
+                      </a>
+                  </div>
+                  <div class="p-2">
+                        <a href="" data-toggle="modal" data-target="#getOrderindModal">
+                        <span class="oi oi-reload" title="Запрос на получение закрытых сведений" aria-hidden="true"></span>
+                      </a>
+                  </div>
+              </div>
+
+              <any id="printable" ng-bind-html="html_egrul"></any>
+              <div class="d-flex flex-row-reverse" ng-show="subscribe_data.search">
+                  <div class="p-2">
+                      <a ng-href="/pdf/{$id$}">
+                        <span class="oi oi-data-transfer-download" title="Скачать PDF" aria-hidden="true"></span>
+                      </a>
+                  </div>
+                  <div class="p-2">
+                      <a href="" ng-click="printDiv('printable')">
+                        <span class="oi oi-print" title="Распечатать" aria-hidden="true"></span>
+                      </a>
+                  </div>
+                  <div class="p-2">
+                        <a href="" data-toggle="modal" data-target="#getOrderindModal">
+                        <span class="oi oi-reload" title="Запросить сведения" aria-hidden="true"></span>
+                      </a>
+                  </div>
+              </div>
+
+          </main>
+
+      </div>
+</div>
+

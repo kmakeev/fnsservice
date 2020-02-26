@@ -1,0 +1,41 @@
+    <!-- Navigation -->
+    <any ng-controller="userCtrl" ng-cloak>
+
+        <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+                <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+           <a class="navbar-brand" href="#">E-System</a>
+           <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Главная <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Настройки</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#!requests">Запросы <span class="badge badge-info" >{$ ws_user.in_progress$}</span> <span ng-if="ws_user.new_result > 0" class="badge badge-success" >{$ ws_user.new_result$}</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Справка</a>
+                    </li>
+
+                </ul>
+
+
+
+                <span ng-show="user" class="navbar-text" ng-cloak>
+                      <a href="#!requests"> {$ user.first_name $} {$ user.last_name $} </a>
+                      <a href="#" ng-click="logout()"> (Выйти) </a>
+                </span>
+                <form ng-hide="user" class="form-inline" method="get">
+                    <button class="btn btn-outline-secondary mr-sm-2" role="button" data-toggle="modal" data-target="#loginModal">Войти</button>
+                    <a href="#!register" class="btn btn-outline-success disabled" role="button" >Зарегистрироваться</a>
+                </form>
+           </div>
+        </nav>
+        {% include "view/modal/login.html" %}
+    </any>
+
+

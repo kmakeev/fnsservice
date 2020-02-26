@@ -1,0 +1,191 @@
+<div class="container-fluid">
+      <div class="row">
+          <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
+              <div class="col-11 offset-1">
+                <h1>Фильтры</h1>
+              </div>
+                  <form name="advanved_search_form" class="form ng-invalid ng-invalid-required ng-dirty ng-valid-parse" novalidate style="">
+                     {% csrf_token %}
+                         <div class="col-11 offset-1">
+                            <input class="form-check-input" name="{{ a_form.isaddr.name }}" id={{ a_form.isaddr.id_for_label }} type="checkbox" ng-model="advanced_subscribe_data['{{ a_form.isaddr.name }}']">
+                            <label for="{{ a_form.isaddr.id_for_label }}"> {{ a_form.isaddr.help_text }} </label>
+                         </div>
+                         <div class="col-11 offset-1 animate-show-hide" ng-show="advanced_subscribe_data['{{ a_form.isaddr.name }}']">
+                            <input class="form-check-input animate-show-hide" name="{{ a_form.isAddrFalsity.name }}" id={{ a_form.isAddrFalsity.id_for_label }} type="checkbox" ng-model="advanced_subscribe_data['{{ a_form.isAddrFalsity.name }}']"/>
+                            <label class="animate-show-hide" for="{{ a_form.isAddrFalsity.id_for_label }}" > {{ a_form.isAddrFalsity.help_text }} </label>
+                         </div>
+                         <div class="col-11 offset-1 animate-show-hide" ng-show="advanced_subscribe_data['{{ a_form.isaddr.name }}']">
+                             <input class="form-check-input animate-show-hide" name="{{ a_form.isAddrChange.name }}" id={{ a_form.isAddrChange.id_for_label }} type="checkbox" ng-model="advanced_subscribe_data['{{ a_form.isAddrChange.name }}']"/>
+                            <label class="animate-show-hide" for="{{ a_form.isAddrChange.id_for_label }}"> {{ a_form.isAddrChange.help_text }} </label>
+                         </div>
+                         <div class="form-group row col-11 offset-1 animate-show-hide" ng-show="advanced_subscribe_data['{{ a_form.isaddr.name }}']">
+                             <input id="{{ a_form.index.id_for_label }}" name="{{ a_form.index.name }}" placeholder="{{ a_form.index.label }}" class="form-control"  ng-model="advanced_subscribe_data['{{ a_form.index.name }}']"/>
+                         </div>
+                         <div class="form-group row col-11 offset-1 animate-show-hide" ng-show="advanced_subscribe_data['{{ a_form.isaddr.name }}']">
+                             <input id="{{ a_form.codeKLADR.id_for_label }}" name="{{ a_form.codeKLADR.name }}" placeholder="{{ a_form.codeKLADR.label }}" class="form-control"  ng-model="advanced_subscribe_data['{{ a_form.codeKLADR.name }}']"/>
+                         </div>
+                         <div class="form-group row col-11 offset-1 animate-show-hide" ng-show="advanced_subscribe_data['{{ a_form.isaddr.name }}']">
+                             <input id="{{ a_form.area.id_for_label }}" name="{{ a_form.area.name }}" placeholder="{{ a_form.area.label }}" class="form-control"  ng-model="advanced_subscribe_data['{{ a_form.area.name }}']"/>
+                         </div>
+                         <div class="form-group row col-11 offset-1 animate-show-hide" ng-show="advanced_subscribe_data['{{ a_form.isaddr.name }}']">
+                             <input id="{{ a_form.city.id_for_label }}" name="{{ a_form.city.name }}" placeholder="{{ a_form.city.label }}" class="form-control"  ng-model="advanced_subscribe_data['{{ a_form.city.name }}']"/>
+                         </div>
+                         <div class="form-group row col-11 offset-1 animate-show-hide" ng-show="advanced_subscribe_data['{{ a_form.isaddr.name }}']">
+                             <input id="{{ a_form.locality.id_for_label }}" name="{{ a_form.locality.name }}" placeholder="{{ a_form.locality.label }}" class="form-control"  ng-model="advanced_subscribe_data['{{ a_form.locality.name }}']"/>
+                         </div>
+                         <div class="form-group row col-11 offset-1 animate-show-hide" ng-show="advanced_subscribe_data['{{ a_form.isaddr.name }}']">
+                             <input id="{{ a_form.street.id_for_label }}" name="{{ a_form.street.name }}" placeholder="{{ a_form.street.label }}" class="form-control"  ng-model="advanced_subscribe_data['{{ a_form.street.name }}']"/>
+                         </div>
+                         <div class="col-11 offset-1">
+                            <input class="form-check-input" name="{{ a_form.isemail.name }}" id={{ a_form.isemail.id_for_label }} type="checkbox" ng-model="advanced_subscribe_data['{{ a_form.isemail.name }}']" >
+                             <label for="{{ a_form.isemail.id_for_label }}"> {{ a_form.isemail.help_text }} </label>
+                         </div>
+                         <div class="form-group row col-11 offset-1 animate-show-hide" ng-show="advanced_subscribe_data['{{ a_form.isemail.name }}']">
+                            <input id="{{ a_form.email.id_for_label }}" name="{{ a_form.email.name }}" placeholder="E-mail" class="form-control animate-show-hide"  ng-model="advanced_subscribe_data['{{ a_form.email.name }}']" />
+                         </div>
+                         <div class="col-11 offset-1">
+                            <input class="form-check-input" name="{{ a_form.isRegInfo.name }}" id={{ a_form.isRegInfo.id_for_label }} type="checkbox" ng-model="advanced_subscribe_data['{{ a_form.isRegInfo.name }}']" >
+                             <label for="{{ a_form.isRegInfo.id_for_label }}"> {{ a_form.isRegInfo.help_text }} </label>
+                         </div>
+                         <div class="form-group row col-11 offset-1 animate-show-hide" ng-show="advanced_subscribe_data['{{ a_form.isRegInfo.name }}']">
+                            <input id="{{ a_form.regNum.id_for_label }}" name="{{ a_form.regNum.name }}" placeholder="{{ a_form.regNum.label }}" class="form-control animate-show-hide"  ng-model="advanced_subscribe_data['{{ a_form.regNum.name }}']" />
+                         </div>
+
+                         <div class="form-group row col-11 offset-1 animate-show-hide" ng-show="advanced_subscribe_data['{{ a_form.isRegInfo.name }}']">
+                            <label class="control-label" for="{{ a_form.codeEduMethod.id_for_label }}">Способ образования юридического лица</label>
+                             {{ a_form.codeEduMethod }}
+                            </div>
+<div class="form-group row col-11 offset-1 animate-show-hide" id="isRegInfo" ng-show="advanced_subscribe_data['isRegInfo']">
+                                 <select class="custom-select form-control form-control-sm" placeholder="Способ образования юридического лица">
+                                     <option value="" selected> Все</option>
+                                     <option value="01">Создание юридического лица до 01.07.2002</option>
+                                     <option value="02">Создание юридического лица путем реорганизации до 01.07.2002</option>
+                                     <option value="03">Регистрации на территории Республики Крым или территории города федерального значения Севастополя на день принятия в Российскую Федерацию </option>
+                                     <option value="11">Создание юридического лица</option>
+                                     <option value="21">Создание юридического лица путем реорганизации в форме преобразования</option>
+                                     <option value="22">Создание юридического лица путем реорганизации в форме слияния</option>
+                                     <option value="23">Создание юридического лица путем реорганизации в форме разделения</option>
+                                     <option value="24">Создание юридического лица путем реорганизации в форме выделения</option>
+                                     <option value="26">Создание юридического лица путем реорганизации в форме выделения с одновременным прекращением его деятельности в связи с присоединением к другому юридическому лицу</option>
+                                     <option value="29">СОЗДАНИЕ ЮРИДИЧЕСКОГО ЛИЦА ПУТЕМ РЕОРГАНИЗАЦИИ В ФОРМЕ СЛИЯНИЯ ЮРИДИЧЕСКИХ ЛИЦ, ВКЛЮЧАЯ ЮРИДИЧЕСКОЕ ЛИЦО, ДЕЯТЕЛЬНОСТЬ КОТОРОГО ПРЕКРАЩАЕТСЯ ОДНОВРЕМЕННО С ЕГО СОЗДАНИЕМ ПРИ РЕОРГАНИЗАЦИИ ДРУГОГО ЮРИДИЧЕСКОГО ЛИЦА В ФОРМЕ РАЗДЕЛЕНИЯ</option>
+                                     <option value="30">Создание юридического лица путем реорганизации</option>
+
+                                 </select>
+                             </div>
+                      <select class="custom-select form-control form-control-sm" ng-model="advanced_subscribe_data[field.name]">
+                                         <option ng-repeat="option in field.options" value="{$option.value$}">{$option.name$}</option>
+                                     </select>
+
+                      MultiSelect
+
+                        <div class="col-11 offset-1">
+                            <button class="btn btn-outline-info btn-block btn-sm" type="button" ng-click="submit()">Обновить</button>
+                            <a href ng-click="resetFilterParam()">Очистить</a>
+                        </div>
+                 </form>
+
+          </nav>
+
+          <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+              <h1>Поиск сведений </h1>
+              <div class="jumbotron">
+                  <div class="container">
+                    <form name="search_form" class="form" novalidate>
+                        {% csrf_token %}
+
+                        <div ng-repeat="error in errors" class="alert alert-danger" role="alert" ng-show="isInvalid">
+                                  <span >{$ error $}</span>
+                        </div>
+                        {{ form.as_div }}
+                        <div class="form-group">
+                            <button class="btn btn-outline-primary btn-block btn-lg" type="button" ng-click="submit()">Найти</button>
+                            <a href ng-click="resetParam()">Очистить</a>
+                        </div>
+
+                    </form>
+                  </div>
+              </div>
+              <div class="center-block" cg-busy="search_promise">
+                    <h4 ng-show="search.$resolved"> Всего найдено записей - {$search.count$} </h4>
+                    <nav aria-label="Search result" ng-show="search.$resolved">
+                            <ul class="pagination justify-content-end">
+                                <li ng-class="{disabled:search.currentPage === 1}" class="page-item">
+                                    <a class="page-link" ng-click="setPage(1)"><<</a>
+                                </li>
+                                <li ng-class="{disabled:search.currentPage === 1}" class="page-item">
+                                    <a class="page-link" ng-click="setPage(search.currentPage - 1)"><</a>
+                                </li>
+                                <li ng-repeat="page in search.pages" ng-class="{active:search.currentPage === page}" class="page-item">
+                                    <a class="page-link" ng-click="setPage(page)">{$page$}</a>
+                                </li>
+                                <li ng-class="{disabled:search.currentPage === search.num_pages}" class="page-item">
+                                    <a class="page-link" ng-click="setPage(search.currentPage + 1)">></a>
+                                </li>
+                                <li ng-class="{disabled:search.currentPage === search.num_pages}" class="page-item">
+                                    <a class="page-link" ng-click="setPage(search.num_pages)">>></a>
+                                </li>
+                            </ul>
+                     </nav>
+                      <div class="table-responsive" ng-show="search.$resolved">
+                          <table class="table table-striped">
+                              <thead>
+                                  <tr>
+                                      <th>№ п/п</th>
+                                      <th>Дата присвоения ОГРН</th>
+                                      <th>ОГРН</th>
+                                      <th>ИНН</th>
+                                      <th>КПП</th>
+                                      <th>Наименование</th>
+                                      <th>Адрес регистрации</th>
+                                      <th>Дата формирования сведений из ЕГРЮЛ </th>
+                                      <th>Дата прекращения деятельности </th>
+                                    </tr>
+                              </thead>
+                              <tbody>
+
+                                    <tr ng-repeat="item in search.results">
+                                        <td>{$ $index + 1 $}</td>
+                                        <td>{$ item.СвЮЛ.ДатаОГРН $}</td>
+                                        <td>{$ item.СвЮЛ.ОГРН $}</td>
+                                        <td>{$ item.СвЮЛ.ИНН $}</td>
+                                        <td>{$ item.СвЮЛ.КПП $}</td>
+                                        <td>{$ item.СвЮЛ.СвНаимЮЛ.НаимЮЛСокр $}
+                                        </td>
+                                        <td>{$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Индекс $} {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Регион $} {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Район $}
+                                            {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Город $} {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.НаселПункт $} {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Улица $} {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Дом $}
+                                            {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Корпус $} {$ item.СвЮЛ.СвАдресЮЛ.АдресРФ.Кварт $}
+                                        </td>
+                                        <td>{$ item.СвЮЛ.ДатаВып $}</td>
+                                        <td>{$ item.СвЮЛ.СвПрекрЮЛ.ДатаПрекрЮЛ $}</td>
+                                    </tr>
+
+
+                              </tbody>
+                          </table>
+                      </div>
+                </div>
+          </main>
+      </div>
+</div>
+
+<script type="text/javascript">
+      $(function () {
+    $('#id_reg_start_date').datetimepicker(
+    {locale: 'ru', format: 'YYYY-MM-DD'
+    });
+    $('#id_reg_end_date').datetimepicker(
+    {locale: 'ru', format: 'YYYY-MM-DD'
+    });
+    $("#id_reg_start_date").on("dp.change",function (e) {
+      $("#id_reg_end_date").data("DateTimePicker").minDate(e.date);
+      $("#id_reg_start_date").trigger('input');
+      $("#id_reg_start_date").trigger('change');
+    });
+    $("#id_reg_end_date").on("dp.change",function (e) {
+    $("#id_reg_start_date").data("DateTimePicker").maxDate(e.date);
+    $("#id_reg_end_date").trigger('input');
+      $("#id_reg_end_date").trigger('change');
+    });
+  });
+</script>
+

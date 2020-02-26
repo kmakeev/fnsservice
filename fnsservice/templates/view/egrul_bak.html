@@ -1,0 +1,59 @@
+<style type="text/css">
+    table { counter-reset: item; }
+    td.num:before {
+    content: counters(item, ".") " ";
+    counter-increment: item;
+
+   }
+
+</style>
+<div class="container-fluid">
+      <div class="row">
+          <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
+              <ul class="nav nav-pills flex-sm-column">
+                  <li ng-repeat="link in content" class="nav-item">
+                      <a class="nav-link" href="" ng-click="scrollTo(link.href)">{$ link.title $}</a>
+                  </li>
+
+              </ul>
+          </nav>
+
+          <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+              <h1>Сведения о государственной регистрации юридических лиц</h1>
+              <div class="jumbotron">
+                  <div class="container">
+                        <p>Сведения размещаются в соответствии с заявками от 10.07.2013 и решением МИ ФНС России от 31.07.2013 №07-17/1333.</p>
+
+
+                        <form name="search_form" ng-controller="myCtrlForm" novalidate>
+                                <!--
+                                {% csrf_token %}
+
+                                  <label for="{{ form.search.id_for_label }}">{{ form.search.label }}</label>
+                                <input id={{ form.search.id_for_label }} class="form-control input-lg" dadata ddt-type="party" ddt-model="party"/> -->
+                            {% csrf_token %}
+                            <div class="alert alert-danger" role="alert" ng-show="isInvalid">
+                                  <span > Неверно заданы параметры поиска</span>
+                                </div>
+                            <div class="form-group animate-show-hide" ng-show="isDjForm" >
+                                {{ form }}
+                            </div>
+                            <div class="form-group animate-show-hide" ng-hide="isDjForm">
+                                <label for="{{ form.search.id_for_label }}" class="control-label">{{ form.search.label }}</label>
+                                <input id={{ form.search.id_for_label }} class="form-control input-lg" dadata ddt-type="party" ddt-model="party"/>
+                            </div>
+                            <button class="btn btn-outline-primary btn-block btn-lg" type="button" ng-click="submit()">Найти</button>
+                            <label class="form-check-label">
+                                    <input type="checkbox" ng-model="showPopup" ng-change="checkboxChange()" class="form-check-input"> Включить подсказки
+                            </label>
+                        </form>
+                  </div>
+              </div>
+              <any ng-bind-html="html_egrul">
+
+               </any>
+          </main>
+
+      </div>
+</div>
+

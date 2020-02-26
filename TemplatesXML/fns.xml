@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+<SOAP-ENV:Body wsu:Id="body">
+    <SendShortULRequest xmlns="http://ws.unisoft/">
+        <smev:Message xmlns:smev="http://smev.gosuslugi.ru/rev111111">
+            <smev:Sender><smev:Code>VSRF</smev:Code>
+                <smev:Name>Верховный Суд Российской Федерации</smev:Name>
+            </smev:Sender>
+            <smev:Recipient>
+                <smev:Code>FNS</smev:Code>
+                <smev:Name>ФНС России</smev:Name>
+            </smev:Recipient>
+            <smev:Originator><smev:Code>VSRF</smev:Code>
+                <smev:Name>Верховный Суд Российской Федерации</smev:Name>
+            </smev:Originator>
+            <smev:TypeCode>GSRV</smev:TypeCode>
+            <smev:Status>REQUEST</smev:Status>
+            <smev:Date>2011-11-11T11:11:11Z</smev:Date>
+            <smev:ExchangeType>3</smev:ExchangeType>
+            <smev:TestMsg/>
+        </smev:Message>
+        <smev:MessageData xmlns:smev="http://smev.gosuslugi.ru/rev111111">
+        <smev:AppData wsu:Id="fns-AppData">
+            <Документ xmlns="http://ws.unisoft/EGRNXX/ShortULReq" ВерсФорм="4.02" ИдДок="F7A7FF9B-C87D-41F8-9C96-EE830A6C5B4A"></Документ>
+        </smev:AppData>
+        </smev:MessageData>
+    </SendShortULRequest>
+    <SendShortFLRequest xmlns="http://ws.unisoft/">
+        <smev:Message xmlns:smev="http://smev.gosuslugi.ru/rev111111">
+            <smev:Sender><smev:Code>VSRF</smev:Code>
+                <smev:Name>Верховный Суд Российской Федерации</smev:Name>
+            </smev:Sender>
+            <smev:Recipient>
+                <smev:Code>FNS</smev:Code>
+                <smev:Name>ФНС России</smev:Name>
+            </smev:Recipient>
+            <smev:Originator><smev:Code>VSRF</smev:Code>
+                <smev:Name>Верховный Суд Российской Федерации</smev:Name>
+            </smev:Originator>
+            <smev:TypeCode>GSRV</smev:TypeCode>
+            <smev:Status>REQUEST</smev:Status>
+            <smev:Date>2011-11-11T11:11:11Z</smev:Date>
+            <smev:ExchangeType>3</smev:ExchangeType>
+            <smev:TestMsg/>
+        </smev:Message>
+        <smev:MessageData xmlns:smev="http://smev.gosuslugi.ru/rev111111">
+        <smev:AppData wsu:Id="fns-AppData">
+            <Документ xmlns="http://ws.unisoft/EGRNXX/ShortFLReq" ВерсФорм="4.02" ИдДок="F7A7FF9B-C87D-41F8-9C96-EE830A6C5B4A"></Документ>
+        </smev:AppData>
+        </smev:MessageData>
+    </SendShortFLRequest>
+    <SendFullULRequest xmlns="http://ws.unisoft/">
+        <smev:Message xmlns:smev="http://smev.gosuslugi.ru/rev111111">
+            <smev:Sender><smev:Code>VSRF</smev:Code>
+                <smev:Name>Верховный Суд Российской Федерации</smev:Name>
+            </smev:Sender>
+            <smev:Recipient>
+                <smev:Code>FNS</smev:Code>
+                <smev:Name>ФНС России</smev:Name>
+            </smev:Recipient>
+            <smev:Originator><smev:Code>VSRF</smev:Code>
+                <smev:Name>Верховный Суд Российской Федерации</smev:Name>
+            </smev:Originator>
+            <smev:TypeCode>GSRV</smev:TypeCode>
+            <smev:Status>REQUEST</smev:Status>
+            <smev:Date>2011-11-11T11:11:11Z</smev:Date>
+            <smev:ExchangeType>3</smev:ExchangeType>
+            <smev:TestMsg/>
+        </smev:Message>
+        <smev:MessageData xmlns:smev="http://smev.gosuslugi.ru/rev111111">
+            <smev:AppData wsu:Id="fns-AppData">
+                <Документ xmlns="http://ws.unisoft/EGRNXX/FullULReq" ВерсФорм="4.02" ИдДок="D8CB3C94-0322-4DEF-A022-30AAA09183A8" НомерДела="01"></Документ>
+            </smev:AppData>
+        </smev:MessageData>
+    </SendFullULRequest>
+    <GetShortULResponse xmlns="http://ws.unisoft/">
+		<smev:Message xmlns:smev="http://smev.gosuslugi.ru/rev111111">
+			<smev:Sender><smev:Code>VSRF</smev:Code>
+                <smev:Name>Верховный Суд Российской Федерации</smev:Name>
+            </smev:Sender>
+            <smev:Recipient>
+                <smev:Code>FNS</smev:Code>
+                <smev:Name>ФНС России</smev:Name>
+            </smev:Recipient>
+            <smev:Originator><smev:Code>VSRF</smev:Code>
+                <smev:Name>Верховный Суд Российской Федерации</smev:Name>
+            </smev:Originator>
+			<smev:TypeCode>GSRV</smev:TypeCode>
+			<smev:Status>REQUEST</smev:Status>
+			<smev:Date>2011-11-11T11:11:11Z</smev:Date>
+			<smev:ExchangeType>3</smev:ExchangeType>
+			<smev:TestMsg/>
+		</smev:Message>
+		<smev:MessageData xmlns:smev="http://smev.gosuslugi.ru/rev111111">
+			<smev:AppData wsu:Id="fns-AppData">
+				<Документ xmlns="http://ws.unisoft/EGRNXX/FullFLUL" ВерсФорм="4.02" ИдЗапросФ=""/>
+			</smev:AppData>
+		</smev:MessageData>
+	</GetShortULResponse>
+    <GetFullULResponse xmlns="http://ws.unisoft/">
+        <smev:Message xmlns:smev="http://smev.gosuslugi.ru/rev111111">
+            <smev:Sender><smev:Code>VSRF</smev:Code>
+                <smev:Name>Верховный Суд Российской Федерации</smev:Name>
+            </smev:Sender>
+            <smev:Recipient>
+                <smev:Code>FNS</smev:Code>
+                <smev:Name>ФНС России</smev:Name>
+            </smev:Recipient>
+            <smev:Originator><smev:Code>VSRF</smev:Code>
+                <smev:Name>Верховный Суд Российской Федерации</smev:Name>
+            </smev:Originator>
+            <smev:TypeCode>GSRV</smev:TypeCode>
+            <smev:Status>REQUEST</smev:Status>
+            <smev:Date>2011-11-11T11:11:11Z</smev:Date>
+            <smev:ExchangeType>3</smev:ExchangeType>
+            <smev:TestMsg/>
+        </smev:Message>
+        <smev:MessageData xmlns:smev="http://smev.gosuslugi.ru/rev111111">
+        <smev:AppData wsu:Id="fns-AppData">
+            <Документ xmlns="http://ws.unisoft/EGRNXX/FullFLUL" ВерсФорм="4.02" ИдЗапросФ="233314"/>
+        </smev:AppData></smev:MessageData>
+    </GetFullULResponse>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

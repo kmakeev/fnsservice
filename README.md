@@ -1,42 +1,28 @@
-Dependencies: 
+### Краткое описание
+Код предназначен для парсинга и сохранения открытых сведений из ЕГРЮЛ (XML-файлы, выгружаемых ФНС России).
+Хранение организовано в реляционной БД (в моем случае PostgreSQL) с разбором информации до уровня каждого поля данных.
+На основе хранимых данных реализована аналитически-поисковая Web-система.
+Представление данных (Выписок) в HTML и PDF видах ведется с помощью XSLT-предобразования оригинала.
+Реализовано построение некоторых графических диаграмм, фильтрации данных по совокупности различных параметров.
 
-django==2.0.2
+### Скриншоты
+![](jpg/screen1.jpg)
 
-psycorp2
 
-djangorestframework-3.11.0
+![](jpg/screen2.jpg)
 
-django-filter==1.1.0
 
-djangorestframework-filters-0.11.1
+![](jpg/screen3.jpg)
 
-django-websocket-redis
 
-lxml
+![](jpg/screen4.jpg)
 
-Celery
 
-django-angular==2.0.1
- 
-zeep
+### Перспективы развития
+* Оптимизация и наведение порядка в коде
+* Создание личного кабинета пользователя
+* Обновление данных по запросу
 
-suds-jurko 
-
-pdfkit
-
-wkhtmltopdf (path to wkhtmltopdf executable file must be in PATH )
-
-bokeh==0.12.13
-
-pandas
-
-networkx
-
-To start:
-Comming soon...
-
-~$ ...
-
-~$ python manage.py collectstatic
+Код распространяется как есть. Связь с разработчиком <kmakeev@arbitr.ru> 
 
 

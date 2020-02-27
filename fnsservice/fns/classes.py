@@ -11,7 +11,7 @@ from django.db import connection
 
 log = logging.getLogger('parse')
 
-NUM_OF_THREADS = 4
+NUM_OF_THREADS = 10
 
 
 class myMultiThread(threading.Thread):
